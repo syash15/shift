@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Share Hub</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .container { background: #f4f4f4; padding: 20px; border-radius: 8px; }
+        .upload-box { background: white; padding: 20px; border: 2px dashed #ccc; text-align: center; margin-bottom: 20px; }
+        .file-list { list-style: none; padding: 0; }
+        .file-item { background: white; padding: 15px; margin-bottom: 10px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
+        .btn { background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📂 Public File Share</h1>
+        
+        <!-- Upload Section -->
+        <div class="upload-box">
+            <h3>Upload a File</h3>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" required>
+                <br><br>
+                <button type="submit" class="btn">Upload File</button>
+            </form>
+            <p><small>Allowed: PDF, Images, Docs, Videos</small></p>
+        </div>
+
+        <!-- Download List -->
+        <h3>Available Files</h3>
+        <ul class="file-list">
+            {% for file in files %}
+            <li class="file-item">
+                <span>📄 {{ file }}</span>
+                <a href="{{ url_for('download_file', filename=file) }}" class="btn">Download</a>
+            </li>
+            {% else %}
+            <p>No files uploaded yet.</p>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
